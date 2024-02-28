@@ -20,7 +20,7 @@
             {
                 <tr>
                     <td>
-                        @item.Id
+                        <a asp-page="/Users/UserDetailView" asp-route-id="@item.Id">@item.Id</a>
                     </td>
                     <td>
                         @item.Forename
@@ -43,7 +43,7 @@
                                 Actions
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="btnToggleActions">
-                                <li><a class="dropdown-item" href="#">View</a></li>
+                                <li><a class="dropdown-item" href="#">@Html.ActionLink("View", "UserDetailView", new { id = item.Id })</a></li>
                                 <li><a class="dropdown-item" href="#">Edit</a></li>
                                 <li><a class="dropdown-item" href="#">Delete</a></li>
                             </ul>

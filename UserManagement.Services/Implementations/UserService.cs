@@ -1,10 +1,12 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using UserManagement.Data;
 using UserManagement.Models;
 using UserManagement.Services.Domain.Interfaces;
+
 
 namespace UserManagement.Services.Domain.Implementations;
 
@@ -25,4 +27,20 @@ public class UserService : IUserService
     }
 
     public IEnumerable<User> GetAll() => _dataAccess.GetAll<User>();
+
+    public async Task<UserDetailViewModel?> GetUserById(int? Id) {
+        var user = await _dataAccess.GetAll<User>().FirstOrDefaultAsync(u => u.Id == Id);
+        if (user == null) { return null; }
+        var viewModel = new UserDetailViewModel
+        {
+            Id = user.Id,
+            Forename = user.Forename,
+            Surname = user.Surname,
+            Email = user.Email,
+            IsActive = user.IsActive,
+            DateOfBirth = user.DateOfBirth,
+
+        };
+        return viewModel;
+    }
 }

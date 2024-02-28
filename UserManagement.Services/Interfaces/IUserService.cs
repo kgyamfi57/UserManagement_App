@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using UserManagement.Models;
+using UserManagement.Web.Models.Users;
 
 namespace UserManagement.Services.Domain.Interfaces;
 
@@ -12,4 +14,5 @@ public interface IUserService
     /// <returns></returns>
     IEnumerable<User> FilterByActive(bool isActive);
     IEnumerable<User> GetAll();
+    Task<UserDetailViewModel?> GetUserById(int? Id);
 }
