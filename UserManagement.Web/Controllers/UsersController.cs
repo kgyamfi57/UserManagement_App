@@ -131,4 +131,22 @@ public class UsersController : Controller
         }
         return View(model);
     }
+     [HttpPost("Delete/{id}"), ValidateAntiForgeryToken]
+     public async Task<IActionResult> Delete(int id)
+    {
+        var user = await _userService.GetUserById(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var result = await _userService.DeleteUserAsync(id);
+        if (!result)
+        {
+            return NotFound();
+        }
+
+        return RedirectToAction(nameof(List));
+    }
 }
+

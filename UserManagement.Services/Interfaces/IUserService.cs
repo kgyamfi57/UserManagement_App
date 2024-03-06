@@ -15,4 +15,5 @@ public interface IUserService
     IEnumerable<User> GetAll();
     Task<UserDetailDTO?> GetUserById(int? Id);
     Task<bool> UpdateUserAsync(UserDetailDTO userDetailDto);
+    Task<bool> DeleteUserAsync(int id);
 }

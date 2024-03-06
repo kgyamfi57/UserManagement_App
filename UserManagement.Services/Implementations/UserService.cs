@@ -63,4 +63,15 @@ public class UserService : IUserService
         return true;
 
     }
+    public async Task<bool> DeleteUserAsync(int id)
+    {
+        var user = await _dataAccess.GetAll<User>().FirstOrDefaultAsync(u => u.Id == id);
+        if (user == null)
+        {
+            return false;
+        }
+
+        _dataAccess.Delete(user);
+        return true;
+    }
 }
