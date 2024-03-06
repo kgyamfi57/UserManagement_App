@@ -74,4 +74,22 @@ public class UserService : IUserService
         _dataAccess.Delete(user);
         return true;
     }
+    public bool AddUser(UserDetailDTO userDetailDto)
+    {
+        
+        var user = new User
+        {
+            Forename = userDetailDto.Forename,
+            Surname = userDetailDto.Surname,
+            Email = userDetailDto.Email,
+            DateOfBirth = userDetailDto.DateOfBirth,
+            IsActive = true 
+        };
+
+      
+        _dataAccess.Create(user);
+
+       
+        return true;
+    }
 }

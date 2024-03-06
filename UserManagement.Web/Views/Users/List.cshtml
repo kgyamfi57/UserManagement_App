@@ -35,7 +35,8 @@
                         @(item.IsActive ? "Yes" : "No")
                     </td>
                     <td>
-                        @item.DateOfBirth
+                        
+                    @Html.DisplayFor(modelItem => item.DateOfBirth)
                     </td>
                     <td>
                         <div class="dropdown">
@@ -45,7 +46,11 @@
                             <ul class="dropdown-menu" aria-labelledby="btnToggleActions">
                                 <li> @Html.ActionLink("View", "UserDetailView", "Users", new { id = item.Id }, new { @class = "dropdown-item" })</li>
                                 <li>@Html.ActionLink("Edit", "Edit", "Users", new { id = item.Id }, new { @class = "dropdown-item" })</li>
-                                <li>@Html.ActionLink("Delete", "Delete", "Users", new { id = item.Id }, new { @class = "dropdown-item", onclick = "return confirm('Are you sure you want to delete this user?');" })</li>
+                                <li>
+                                    <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                        <button type="submit" class="dropdown-item">Delete</button>
+                                    </form>
+                                </li>
                             </ul>
                         </div>
                     </td>
@@ -63,7 +68,5 @@
     </div>
 
 
-    <a href="#" class="btn btn-primary float-end">
-        Add User
-    </a>
+    <a href="@Url.Action("Add", "Users")" class="btn btn-primary float-end">Add User</a>
 </div>

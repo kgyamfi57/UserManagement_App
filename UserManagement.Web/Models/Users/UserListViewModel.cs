@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace UserManagement.Web.Models.Users;
 
@@ -15,5 +16,6 @@ public class UserListItemViewModel
     public string? Email { get; set; }
     public bool IsActive { get; set; }
 
+    [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
     public DateTime DateOfBirth { get; set; }
 }

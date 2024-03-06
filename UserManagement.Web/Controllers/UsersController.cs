@@ -15,8 +15,8 @@ public class UsersController : Controller
     private readonly IUserService _userService;
     public UsersController(IUserService userService) => _userService = userService;
 
-    [HttpGet]
-
+    [HttpGet("list")]
+    
     public ViewResult List(bool? isActive)
     {
         IEnumerable<User> users;
@@ -148,5 +148,36 @@ public class UsersController : Controller
 
         return RedirectToAction(nameof(List));
     }
+    [HttpGet("add")]
+    public IActionResult Add()
+    {
+        return View();
+    }
+
+    [HttpPost("add")]
+    [ValidateAntiForgeryToken]
+   public IActionResult Add(AddUserViewModel model)
+{
+    if (ModelState.IsValid)
+    {
+        var userDetailDto = new UserDetailDTO
+        {
+            Forename = model.Forename,
+            Surname = model.Surname,
+            Email = model.Email,
+            DateOfBirth = model.DateOfBirth
+        };
+
+        var result = _userService.AddUser(userDetailDto);
+        if (result)
+        {
+            return RedirectToAction(nameof(List));
+        }
+       
+    }
+
+    return View(model);
+}
+
 }
 
