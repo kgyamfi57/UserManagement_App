@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using UserManagement.Data;
 using UserManagement.Models;
 using UserManagement.Services.Domain.Interfaces;
+using UserManagement.Services.DataTransferObjects;
 
 
 namespace UserManagement.Services.Domain.Implementations;
@@ -28,10 +29,11 @@ public class UserService : IUserService
 
     public IEnumerable<User> GetAll() => _dataAccess.GetAll<User>();
 
-    public async Task<UserDetailViewModel?> GetUserById(int? Id) {
+    public async Task<UserDetailDTO?> GetUserById(int? Id)
+    {
         var user = await _dataAccess.GetAll<User>().FirstOrDefaultAsync(u => u.Id == Id);
         if (user == null) { return null; }
-        var viewModel = new UserDetailViewModel
+        var viewModel = new UserDetailDTO
         {
             Id = user.Id,
             Forename = user.Forename,
@@ -42,5 +44,23 @@ public class UserService : IUserService
 
         };
         return viewModel;
+    }
+
+    public async Task<bool> UpdateUserAsync(UserDetailDTO userDetailDto)
+    {
+        var user = await _dataAccess.GetAll<User>().FirstOrDefaultAsync(u => u.Id == userDetailDto.Id);
+        if (user == null)
+        {
+            return false;
+        }
+
+        user.Forename = userDetailDto.Forename;
+        user.Surname = userDetailDto.Surname;
+        user.Email = userDetailDto.Email;
+        user.DateOfBirth = userDetailDto.DateOfBirth;
+
+        _dataAccess.Update(user);
+        return true;
+
     }
 }
